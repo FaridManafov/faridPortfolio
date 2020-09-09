@@ -22,7 +22,7 @@ const scssTask = () => {
         .pipe(postcss([ autoprefixer(), cssnano() ]))
         .pipe(sourcemaps.write('.'))
         .pipe(dest('dist'))
-        .pipe(browsersync.stream({stream: 'true'}))
+        .pipe(browsersync.reload({stream: true}))
 }
 
 const jsTask = () => {
@@ -30,7 +30,7 @@ const jsTask = () => {
         .pipe(uglify())
         .pipe(concat('main.js'))
         .pipe(dest('dist'))
-        .pipe(browsersync.stream({stream: 'true'}))
+        .pipe(browsersync.reload({stream: true}))
 }
 
 const cbString = new Date().getTime()
@@ -40,10 +40,10 @@ const cacheBuster = () => {
         .pipe(dest('.'))
 }
 
-const serverRefresh = (done) => {
-    browsersync.reload()
-    done()
-}
+// const serverRefresh = (done) => {
+//     browsersync.reload()
+//     done()
+// }
 
 const serve = (done) => {
     browsersync.init({
@@ -55,7 +55,7 @@ const serve = (done) => {
 }
 
 const watchTask = () => {
-    watch([files.scssPath, files.jsPath], series(parallel(scssTask, jsTask), serverRefresh)) //removed cachebuster atm
+    watch([files.scssPath, files.jsPath], series(parallel(scssTask, jsTask))) //removed cachebuster atm
 }
 
 exports.default = series(parallel(scssTask, jsTask), serve, watchTask)
