@@ -1,11 +1,5 @@
 const {src, dest, watch, series, parallel} = require('gulp')
-const autoprefixer = require('autoprefixer')
-const cssnano = require('cssnano')
-const concat = require('gulp-concat')
-const postcss = require('gulp-postcss')
-const replace = require('gulp-replace')
 const sass = require('gulp-sass')
-const sourcemaps = require('gulp-sourcemaps')
 const uglify = require('gulp-uglify')
 const browsersync = require('browser-sync').create()
 
@@ -21,7 +15,7 @@ const serve = () => {
             baseDir: './app'
         }
     })
-    watch([files.scssPath, files.jsPath], series(scssTask, jsTask)) //removed cachebuster atm
+    watch([files.scssPath, files.jsPath], series(scssTask, jsTask))
     watch([files.scssPath, files.jsPath]).on('change', browsersync.reload)
 }
 

@@ -1,10 +1,11 @@
-$animation-transition: 10s;
+$animation-length: 10s;
+$color: bisque;
 
-@keyframes loading{
+@keyframes home-rotation{
     0%{
-        width: 0%;
-    } 100%{
-        width: 100%;
+        transform: rotate(0deg);
+    }100%{
+        transform: rotate(50deg);
     }
 }
 
@@ -18,7 +19,10 @@ html {
 }
 
 .top-home{
-    background-color: bisque;
+    background-color: $color;
+    height: 100vh;
+    transform: rotate(50deg);
+    animation: home-rotation $animation-length ease-out;
 }
 
 .bottom-home{
