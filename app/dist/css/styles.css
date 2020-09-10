@@ -1,0 +1,18 @@
+@keyframes loading {
+  0% {
+    width: 0%; }
+  100% {
+    width: 100%; } }
+
+html {
+  box-sizing: border-box;
+  font-size: 100%; }
+
+*, *::before, *::after {
+  box-sizing: inherit; }
+
+.top-home {
+  background-color: bisque; }
+
+.bottom-home {
+  background-color: #747474; }

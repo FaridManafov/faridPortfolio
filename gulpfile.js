@@ -10,52 +10,33 @@ const uglify = require('gulp-uglify')
 const browsersync = require('browser-sync').create()
 
 const files = {
-    scssPath: 'app/scss/**/*.scss',
-    jsPath: 'app/js/**/*.js',
-    htmlPath: 'app/index.html'
+    scssPath: './app/scss/*.scss',
+    jsPath: './app/js/*.js',
+    htmlPath: './app/index.html'
+}
+
+const serve = () => {
+    browsersync.init({
+        server:{
+            baseDir: './app'
+        }
+    })
+    watch([files.scssPath, files.jsPath], series(scssTask, jsTask)) //removed cachebuster atm
+    watch([files.scssPath, files.jsPath]).on('change', browsersync.reload)
 }
 
 const scssTask = () => {
     return src(files.scssPath)
-        .pipe(sourcemaps.init())
         .pipe(sass())
-        .pipe(postcss([ autoprefixer(), cssnano() ]))
-        .pipe(sourcemaps.write('.'))
-        .pipe(dest('dist'))
-        .pipe(browsersync.reload({stream: true}))
+        .pipe(dest('./app/dist/css'))
+        .pipe(browsersync.stream())
 }
 
 const jsTask = () => {
     return src(files.jsPath)
         .pipe(uglify())
-        .pipe(concat('main.js'))
-        .pipe(dest('dist'))
-        .pipe(browsersync.reload({stream: true}))
+        .pipe(dest('./app/dist/js'))
+        .pipe(browsersync.stream())
 }
 
-const cbString = new Date().getTime()
-const cacheBuster = () => {
-    return src(['index.html'])
-        .pipe(replace(/cb=\d+/g, 'cb=' + cbString))
-        .pipe(dest('.'))
-}
-
-// const serverRefresh = (done) => {
-//     browsersync.reload()
-//     done()
-// }
-
-const serve = (done) => {
-    browsersync.init({
-        server:{
-            baseDir: './'
-        }
-    })
-    done()
-}
-
-const watchTask = () => {
-    watch([files.scssPath, files.jsPath], series(parallel(scssTask, jsTask))) //removed cachebuster atm
-}
-
-exports.default = series(parallel(scssTask, jsTask), serve, watchTask)
+exports.default = series(scssTask, jsTask, serve)
