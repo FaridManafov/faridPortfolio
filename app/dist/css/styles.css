@@ -11,11 +11,16 @@ html {
 *, *::before, *::after {
   box-sizing: inherit; }
 
-.top-home {
-  background-color: bisque;
-  height: 100vh;
-  transform: rotate(50deg);
-  animation: home-rotation 10s ease-out; }
+.home-background {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; }
 
-.bottom-home {
-  background-color: #747474; }
+.landing-page {
+  height: 50vh;
+  background-color: bisque; }
+
+.name-text {
+  color: red;
+  mix-blend-mode: difference; }

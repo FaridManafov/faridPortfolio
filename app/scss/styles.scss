@@ -18,17 +18,22 @@ html {
     box-sizing: inherit;
 }
 
-.top-home{
-    background-color: $color;
+.home-background{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    // transform: rotate(50deg);
+    // animation: home-rotation $animation-length ease-out;
     height: 100vh;
-    transform: rotate(50deg);
-    animation: home-rotation $animation-length ease-out;
 }
 
-.bottom-home{
-    background-color: rgb(116, 116, 116);
+.landing-page{
+    height: 50vh;
+    background-color: $color;
 }
 
-.example{
-
+.name-text{
+    color: red;
+    mix-blend-mode: difference;
 }
